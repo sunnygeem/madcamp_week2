@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 void main() {
+  KakaoSdk.init(nativeAppKey: 'f6e96e5eb182ce45ba336e6b156a718e',);
   runApp(const MyApp());
 }
 
@@ -80,3 +82,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
