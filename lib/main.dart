@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Week2'),
+      home: KakaoLoginPage(),
     );
   }
 }
@@ -83,4 +83,48 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+class KakaoLoginPage extends StatefulWidget {
+  @override
+  _KakaoLoginPageState createState() => _KakaoLoginPageState();
+}
 
+class _KakaoLoginPageState extends State<KakaoLoginPage> {
+  Future<void> _loginButtonPressed() async {
+    try {
+      await UserApi.instance.loginWithKakaoAccount();
+      print('카카오계정으로 로그인 성공');
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => MyHomePage(title: 'week2'),
+      ),);
+    } catch (error) {
+      print('카카오계정으로 로그인 실패 $error');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                onPressed: _loginButtonPressed,
+                child: Text(
+                  '카카오 로그인',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
