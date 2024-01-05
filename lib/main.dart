@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:mysql_client/mysql_client.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+Future<void> dbConnector() async {
+  print("Connecting to mysql server...");
+
+  // MySQL 접속 설정
+  final conn = await MySQLConnection.createConnection(
+    host: 'root',
+    port: 3306,
+    userName: 'gangtae',
+    password: '1234',
+    databaseName: 'testdb', // optional
+  );
+
+  // 연결 대기
+  await conn.connect();
+
+  print("Connected");
+
+  // 종료 대기
+  await conn.close();
 }
 
 class MyApp extends StatelessWidget {
