@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:madcamp_week2/screen/Tab1.dart';
+import 'package:madcamp_week2/screen/sing_up_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
-
-import 'Tab1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: _buildThemeData(),
-      home: MyHomePage(title: "Week2"),
-
+      home: SignupPage(),
     );
   }
 
@@ -34,9 +34,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  final GoogleSignInAccount? user;
+  MyHomePage({super.key, required this.user});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
