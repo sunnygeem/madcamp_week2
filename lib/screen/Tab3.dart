@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Tab1 extends StatelessWidget{
-  const Tab1({super.key});
+class Tab3 extends StatelessWidget{
+  const Tab3({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       children: <Widget>[
         Positioned(
@@ -26,7 +27,7 @@ class Tab1 extends StatelessWidget{
           bottom: 690,
           left: 28.0,
           child: Text(
-            '나만의 산책로',
+            '산책메이트',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
@@ -36,10 +37,10 @@ class Tab1 extends StatelessWidget{
         ),
         Positioned(
           bottom: 690,
-          left: 200.0,
+          left: 170.0,
           child: CustomPaint(
             painter: MyLinePainter(),
-            size: const Size(180, 10),
+            size: const Size(210, 10),
           ),
         ),
         Positioned(
@@ -65,7 +66,7 @@ class MyLinePainter extends CustomPainter{
       ..strokeWidth = 2.0
       ..strokeCap = StrokeCap.round;
     const Offset startPoint = Offset(0, 0);
-    const Offset endPoint = Offset(180, 0);
+    const Offset endPoint = Offset(210, 0);
 
     canvas.drawLine(startPoint, endPoint, paint);
   }
