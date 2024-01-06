@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Tab1 extends StatelessWidget{
-  const Tab1({super.key});
+class Tab2 extends StatelessWidget{
+  const Tab2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class Tab1 extends StatelessWidget{
           bottom: 690,
           left: 28.0,
           child: Text(
-            '나만의 산책로',
+            '산책로 리스트',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,

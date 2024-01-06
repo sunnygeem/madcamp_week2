@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-import 'package:stylish_bottom_bar/model/bar_items.dart';
 
 import 'Tab1.dart';
+import 'Tab2.dart';
+import 'Tab3.dart';
+import 'Tab4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,9 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
           index: _currentIndex,
           children: const[
             Tab1(),
-            Text('tab2'),
-            Text('tab3'),
-            Text('tab4'),
+            Tab2(),
+            Tab3(),
+            Tab4(),
           ],
         ),
       ),
