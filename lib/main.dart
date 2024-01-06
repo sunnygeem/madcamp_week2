@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'Tab1.dart';
-import 'Tab2.dart';
-import 'Tab3.dart';
-import 'Tab4.dart';
+import 'package:madcamp_week2/screen/Tab1.dart';
+import 'package:madcamp_week2/screen/Tab2.dart';
+import 'package:madcamp_week2/screen/Tab3.dart';
+import 'package:madcamp_week2/screen/Tab4.dart';
 
 void main() {
   runApp(const MyApp());
