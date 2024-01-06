@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
+
+import 'Tab1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +16,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Week2'),
+      theme: _buildThemeData(),
+      home: MyHomePage(title: "Week2"),
+
     );
+  }
+
+  ThemeData _buildThemeData() {
+    final base = ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF0B421A)),
+      scaffoldBackgroundColor: Color(0xFF0B421A),
+      useMaterial3: true,
+    );
+
+    return base.copyWith();
   }
 }
 
@@ -36,15 +48,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+      appBar: PreferredSize(
+        child: AppBar(),
+        preferredSize: Size.fromHeight(0),
       ),
       body: Center(
         child: IndexedStack(
           index: _currentIndex,
           children: const[
-            Text('tab1'),
+            Tab1(),
             Text('tab2'),
             Text('tab3'),
             Text('tab4'),
@@ -58,25 +70,80 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = value;
           });
         },
-        items: const[
+
+        selectedItemColor: Color(0xFFF6F3F0),
+        unselectedItemColor: Color(0xFFF6F3F0),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        selectedIconTheme: IconThemeData(color: Color(0xFF0B421A)),
+        unselectedIconTheme: IconThemeData(color: Color(0xFFF6F3F0)),
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xFF0B421A),
+
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            label: 'Walk',
-            icon: Icon(Icons.directions_walk),
+            label: 'Add',
+            icon: Container(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.add),
+            ),
+            activeIcon: Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Color(0xFFF6F3F0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Icon(Icons.add),
+            ),
           ),
           BottomNavigationBarItem(
-            label: 'View',
-            icon: Icon(Icons.remove_red_eye),
+            label: 'List',
+            icon: Container(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.list),
+            ),
+            activeIcon: Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Color(0xFFF6F3F0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Icon(Icons.list),
+            ),
           ),
           BottomNavigationBarItem(
-            label: 'Mate',
-            icon: Icon(Icons.people_alt),
+            label: 'Friends',
+            icon: Container(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.groups),
+            ),
+            activeIcon: Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Color(0xFFF6F3F0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Icon(Icons.groups),
+            ),
           ),
           BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.person),
+            label: 'MyProfile',
+            icon: Container(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.account_circle),
+            ),
+            activeIcon: Container(
+              padding: EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Color(0xFFF6F3F0),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Icon(Icons.account_circle),
+            ),
           ),
         ],
       ),
     );
   }
 }
+
