@@ -1,4 +1,5 @@
 android/app/mykey.jks
+back-end/config/
 
 # Miscellaneous
 *.class
