@@ -60,8 +60,8 @@ class _SignupPageState extends State<SignupPage> {
     dynamic data = {'user_email': email, 'user_name': name};
     String jsonString = jsonEncode(data);
     try {
-      final response = await http.post(Uri.parse('http://15.164.95.87:3306/sendUserInfo'),
-          headers: {"Content-Type": "application/json; charset=UTF-8"}, body: jsonString);
+      final response = await http.post(Uri.parse('http://15.164.95.87:5000/sendUserInfo'),
+          headers: {"Content-Type": "application/json"}, body: jsonString);
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");
     } catch (e) {
