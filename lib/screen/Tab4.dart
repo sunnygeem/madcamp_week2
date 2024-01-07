@@ -84,95 +84,149 @@ class Tab4 extends StatelessWidget{
           body: SafeArea(
             child: Center(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
+                children: <Widget>[
+                  const SizedBox(height: 330),
                   Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 28),
-                        child: const Text(
-                          '닉네임',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0B421A),
+                      SizedBox(
+                        width: 120,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 30),
+                          child: const Text(
+                            '닉네임',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0B421A),
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(left: 100),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFEAC784),
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: const Text(
-                          'default',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
+                      SizedBox(
+                        width: 240,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 24),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEAC784),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          height: 30,
+                          child: const Center(
+                            child: Text(
+                              'default',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 28),
-                        child: const Text(
-                          'e-mail',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0B421A),
+                      SizedBox(
+                        width: 120,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 30),
+                          child: const Text(
+                            'e-mail',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0B421A),
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(left: 100),
-                        child: const Text(
-                          'default',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
+                      SizedBox(
+                        width: 240,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 24),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEAC784),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          height: 30,
+                          child: const Center(
+                            child: Text(
+                              'default',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 28),
-                        child: const Text(
-                          '티어',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0B421A),
+                      SizedBox(
+                        width: 120,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 30),
+                          child: const Text(
+                            '티어',
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0B421A),
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(left: 100),
-                        child: const Text(
-                          'default',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
+                      SizedBox(
+                        width: 240,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 24),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFEAC784),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          height: 30,
+                          child: const Center(
+                            child: Text(
+                              'default',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 100),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFF0B421A),
+                      elevation: 15.0,
+                    ),
+                    onPressed: () {
+                      print('pressed button');
+                    },
+                    child: const Text(
+                      '프로필 수정',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-
         ),
       ],
     );
