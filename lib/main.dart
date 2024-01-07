@@ -56,11 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: IndexedStack(
           index: _currentIndex,
-          children: const[
+          children: [
             Tab1(),
             Tab2(),
             Tab3(),
-            Tab4(),
+            Tab4(user: widget.user,),
           ],
         ),
       ),
