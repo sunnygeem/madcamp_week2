@@ -57,10 +57,10 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   insertDataToAcc(String email, String name) async {
-    dynamic data = {'account_email': email, 'account_name': name};
+    dynamic data = {'user_email': email, 'user_name': name};
     String jsonString = jsonEncode(data);
     try {
-      final response = await http.post(Uri.parse('http://10.0.2.2:8000/sendAcc'),
+      final response = await http.post(Uri.parse('http://15.164.95.87:3306/sendUserInfo'),
           headers: {"Content-Type": "application/json; charset=UTF-8"}, body: jsonString);
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");
