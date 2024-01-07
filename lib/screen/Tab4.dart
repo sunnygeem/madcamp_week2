@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:madcamp_week2/screen/edit_profile_screen.dart';
 
+// tab: myprofile
 class Tab4 extends StatelessWidget{
-  const Tab4({super.key});
+  final GoogleSignInAccount? user;
+  const Tab4({super.key, required this.user,});
 
   @override
   Widget build(BuildContext context) {
@@ -111,9 +115,9 @@ class Tab4 extends StatelessWidget{
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           height: 30,
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              'default',
+                              '${user?.displayName}',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -151,9 +155,9 @@ class Tab4 extends StatelessWidget{
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           height: 30,
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              'default',
+                              '${user?.email}',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -165,46 +169,7 @@ class Tab4 extends StatelessWidget{
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        child: Container(
-                          margin: EdgeInsets.only(left: 30),
-                          child: const Text(
-                            '티어',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF0B421A),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 240,
-                        child: Container(
-                          margin: EdgeInsets.only(left: 24),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFEAC784),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          height: 30,
-                          child: const Center(
-                            child: Text(
-                              'default',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+
                   const SizedBox(height: 100),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -213,7 +178,9 @@ class Tab4 extends StatelessWidget{
                       elevation: 15.0,
                     ),
                     onPressed: () {
-                      print('pressed button');
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => EditProfile(user: user,),
+                      ));
                     },
                     child: const Text(
                       '프로필 수정',
@@ -253,3 +220,4 @@ class MyLinePainter extends CustomPainter{
   }
 
 }
+
