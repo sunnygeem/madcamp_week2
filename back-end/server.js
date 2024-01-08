@@ -146,6 +146,24 @@ app.get('/getTrail', function(req, res){ // trail_name으로 pos 정보 가져�
     })
   })
 
+app.get('/getTrailTable', function(req, res){
+    var sql = 'select * from trail';
+    con.query(sql, function(err, id, fields){
+      var user_id = req.params.id;
+      if(id){
+        var sql='select * from trail'
+        con.query(sql, function(err, result, fields){
+          if(err){
+            console.log(err);
+          }else{
+            res.json(id);
+            console.log('user:', fields);
+          }
+        })
+      }
+    })
+  })
+
 // table: review
 app.post("/sendReview", function(req,res){
         const body = req.body;
