@@ -8,10 +8,15 @@ import 'package:madcamp_week2/screen/sing_up_screen.dart';
 import 'package:http/http.dart' as http;
 
 // tab: myprofile
-class Tab4 extends StatelessWidget{
+class Tab4 extends StatefulWidget{
   final GoogleSignInAccount? user;
   const Tab4({super.key, required this.user,});
 
+  @override
+  State<Tab4> createState() => _Tab4State();
+}
+
+class _Tab4State extends State<Tab4> {
   @override
   Widget build(BuildContext context) {
 
@@ -90,7 +95,7 @@ class Tab4 extends StatelessWidget{
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          body: SafeArea(
+          body: SingleChildScrollView(
             child: Center(
               child: Column(
                 children: <Widget>[
@@ -122,7 +127,7 @@ class Tab4 extends StatelessWidget{
                           height: 30,
                           child: Center(
                             child: FutureBuilder<String?>(
-                              future: getStringData('${user?.email}'),
+                              future: getStringData('${widget.user?.email}'),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return const CircularProgressIndicator(); // 로딩 중일 때 표시할 위젯
@@ -172,7 +177,7 @@ class Tab4 extends StatelessWidget{
                           height: 30,
                           child: Center(
                             child: Text(
-                              '${user?.displayName}',
+                              '${widget.user?.displayName}',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -212,7 +217,7 @@ class Tab4 extends StatelessWidget{
                           height: 30,
                           child: Center(
                             child: Text(
-                              '${user?.email}',
+                              '${widget.user?.email}',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
@@ -233,9 +238,12 @@ class Tab4 extends StatelessWidget{
                       elevation: 15.0,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => EditProfile(user: user,),
-                      ));
+                      setState(() {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EditProfile(user: widget.user,),
+                        ));
+                      });
+
                     },
                     child: const Text(
                       '프로필 수정',
@@ -253,9 +261,9 @@ class Tab4 extends StatelessWidget{
                       elevation: 8.0,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => SignupPage(),
-                      ));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => SignupPage(),
+                        ));
                     },
                     child: const Text(
                       '로그아웃',
@@ -289,7 +297,6 @@ class Tab4 extends StatelessWidget{
     }
   }
 
-
   Future<String?> getStringData(String email) async {
     // try {
     //   // getJsonData 함수 호출
@@ -315,7 +322,7 @@ class Tab4 extends StatelessWidget{
         if (jsonData.containsKey('user_nickname')) {
           String userNickname = jsonData['user_nickname'];
           // userNickname을 JSON 형태의 문자열로 변환하여 반환
-          String jsonString = "$userNickname";
+          String jsonString = userNickname;
           return jsonString;
         } else {
           return null; // 'user_nickname' 키가 존재하지 않는 경우
