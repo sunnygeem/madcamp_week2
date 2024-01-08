@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            label: 'Add',
+            label: '산책 코스 등록',
             icon: Container(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.add),
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'List',
+            label: '산책 코스 공유',
             icon: Container(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.list),
@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           BottomNavigationBarItem(
-            label: 'MyProfile',
+            label: '프로필',
             icon: Container(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.account_circle),
