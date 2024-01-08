@@ -79,6 +79,11 @@ class _Tab4State extends State<Tab4> {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFF0B421A),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -121,10 +126,18 @@ class _Tab4State extends State<Tab4> {
                         child: Container(
                           margin: EdgeInsets.only(left: 24),
                           decoration: BoxDecoration(
-                            color: Color(0xFFEAC784),
+                            color: Color(0xFFF6F3F0),
                             borderRadius: BorderRadius.circular(20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
                           ),
-                          height: 30,
+                          height: 40,
                           child: Center(
                             child: FutureBuilder<String?>(
                               future: getStringData('${widget.user?.email}'),
@@ -137,7 +150,12 @@ class _Tab4State extends State<Tab4> {
                                   // 반환된 String 데이터를 Text 위젯에 출력
                                   String? jsonString = snapshot.data;
                                   if (jsonString != null) {
-                                    return Text(jsonString);
+                                    return Text(
+                                      jsonString,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    );
                                   } else {
                                     return Text('No data available');
                                   }
@@ -171,15 +189,23 @@ class _Tab4State extends State<Tab4> {
                         child: Container(
                           margin: EdgeInsets.only(left: 24),
                           decoration: BoxDecoration(
-                            color: Color(0xFFEAC784),
+                            color: Color(0xFFF6F3F0),
                             borderRadius: BorderRadius.circular(20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
                           ),
-                          height: 30,
+                          height: 40,
                           child: Center(
                             child: Text(
                               '${widget.user?.displayName}',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 20,
                                 fontWeight: FontWeight.normal,
                                 color: Colors.black,
                               ),
@@ -211,10 +237,18 @@ class _Tab4State extends State<Tab4> {
                         child: Container(
                           margin: EdgeInsets.only(left: 24),
                           decoration: BoxDecoration(
-                            color: Color(0xFFEAC784),
+                            color: Color(0xFFF6F3F0),
                             borderRadius: BorderRadius.circular(20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
                           ),
-                          height: 30,
+                          height: 40,
                           child: Center(
                             child: Text(
                               '${widget.user?.email}',
@@ -235,7 +269,7 @@ class _Tab4State extends State<Tab4> {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Color(0xFF0B421A),
-                      elevation: 15.0,
+                      elevation: 5.0,
                     ),
                     onPressed: () {
                       setState(() {
@@ -248,17 +282,17 @@ class _Tab4State extends State<Tab4> {
                     child: const Text(
                       '프로필 수정',
                       style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                   const SizedBox(height: 30),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.grey,
-                      backgroundColor: Colors.white,
-                      elevation: 8.0,
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey,
+                      elevation: 5.0,
                     ),
                     onPressed: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
