@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:madcamp_week2/screen/Tab1_createMap.dart';
 
 class Tab1 extends StatefulWidget{
-  const Tab1({Key? key}) : super(key: key);
+  final GoogleSignInAccount?  user;
+  const Tab1({super.key, required this.user});
   @override
   _Tab1State createState() => _Tab1State();
 }
 
+
 class _Tab1State extends State<Tab1>{
   String addressResult = 'default';
+
 
   @override
   Widget build(BuildContext context){
@@ -137,7 +140,7 @@ class _Tab1State extends State<Tab1>{
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MapScreen()),
+                              MaterialPageRoute(builder: (context) => MapScreen(user: widget.user,)),
                             );
                           },
                         ),

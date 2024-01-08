@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: IndexedStack(
           index: _currentIndex,
           children: [
-            Tab1(),
+            Tab1(user: widget.user,),
             Tab2(),
             Tab3(),
             Tab4(user: widget.user,),
