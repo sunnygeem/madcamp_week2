@@ -124,8 +124,8 @@ app.get('/getPosition', function(req, res){ // trail_name으로 pos 정보 가�
 // table: trail
 app.post("/sendTrail", function(req,res){
         const body = req.body;
-        var sql = 'INSERT INTO trail (trail_name, user_email, tag, shortInfo) VALUES (?, ?, ?, ?)';
-        con.query(sql, [body.trail_name, body.user_email, body.tag, body.shortInfo], function(error, result, field){
+        var sql = 'INSERT INTO trail (trail_name, user_email) VALUES (?, ?)';
+        con.query(sql, [body.trail_name, body.user_email], function(error, result, field){
             if(error){
             console.error(error);
             }
@@ -135,7 +135,7 @@ app.post("/sendTrail", function(req,res){
 app.get('/getTrail', function(req, res){ // trail_name으로 pos 정보 가져오기
         var trail_name = req.query.trailName;
         console.log(trail_name);
-    var sql = 'select (user_email, tag, shortInfo) from trail where trail_name = ?';
+    var sql = 'select user_email from trail where trail_name = ?';
     con.query(sql, [trail_name], function(err, result, fields){
       if(err){
         console.log(err);
