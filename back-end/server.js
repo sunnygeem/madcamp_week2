@@ -77,4 +77,19 @@ app.post("/sendUserInfo", function(req,res){
         })
       })
 
+app.patch('/update/user_nickname', (req, res) => {
+	console.log(req.body.user_nickname);
+	con.query(
+    `UPDATE user SET user_nickname=? WHERE user_email=? `,
+    [req.body.user_nickname, req.query.encodedEmail],
+    (err, results, field) => {
+      if (err) throw err;
+	    else{
+      		console.log('results: ', results);
+      		res.send('update ok');
+    	}
+    }
+  )
+})
+
 app.listen(PORT, function(){console.log('now on port 5000')})
