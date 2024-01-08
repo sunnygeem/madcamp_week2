@@ -35,6 +35,9 @@ dependencies:
   sqflite: ^2.2.8
   mysql_client: ^0.0.27
   geolocator: ^8.1.0
+  convert: ^3.1.1
+  google_maps_flutter: ^2.5.1
+  flutter_polyline_points: ^2.0.0
 
 
 
@@ -74,6 +77,8 @@ flutter:
     - assets/tree.png
     - assets/default_icon.png
     - assets/pin.png
+    - assets/pin_mini.png
+    - assets/pin_point.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
-class Tab1 extends StatelessWidget{
-  const Tab1({super.key});
+import 'package:madcamp_week2/screen/Tab1_createMap.dart';
 
-  void getLocation() async {
-    // Check if the app has location permission
-    LocationPermission permission = await Geolocator.checkPermission();
+class Tab1 extends StatefulWidget{
+  const Tab1({Key? key}) : super(key: key);
+  @override
+  _Tab1State createState() => _Tab1State();
+}
 
-    if (permission == LocationPermission.denied) {
-      // If permission is denied, request it
-      permission = await Geolocator.requestPermission();
-
-      if (permission == LocationPermission.denied) {
-        // Handle denied permission
-        print("Location permission denied");
-        return;
-      }
-    }
-
-    // Now, you have the permission to access the location
-    try {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print(position);
-    } catch (e) {
-      print("Error: $e");
-    }
-  }
+class _Tab1State extends State<Tab1>{
+  String addressResult = 'default';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Stack(
       children: <Widget>[
         Positioned(
@@ -98,7 +84,7 @@ class Tab1 extends StatelessWidget{
                 bottom: 515,
                 left: 96,
                 child: Text(
-                  '현재 위치',
+                  '현재 위치를 확인하세요',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -106,12 +92,12 @@ class Tab1 extends StatelessWidget{
                   ),
                 ),
               ),
-              const Positioned(
+              Positioned(
                 bottom: 490,
                 left: 96,
                 child: Text(
-                  'default',
-                  style: TextStyle(
+                  addressResult,
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w200,
                     color: Colors.black,
@@ -126,12 +112,111 @@ class Tab1 extends StatelessWidget{
                   size: const Size(310, 10),
                 ),
               ),
+              Column(
+                children: [
+                  const SizedBox(height: 440),
+                  Center(
+                    child: Positioned(
+                      child: Container(
+                        width: 152,
+                        height: 152,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFF0B421A),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              spreadRadius: 3,
+                              blurRadius: 5,
+                              offset: Offset(0,0),
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          icon: Image.asset('assets/tree.png'),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => MapScreen()),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ],
     );
   }
+
+  void getLocation() async {
+    // Check if the app has location permission
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      // If permission is denied, request it
+      permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        // Handle denied permission
+        print("Location permission denied");
+        return;
+      }
+    }
+
+    // Now, you have the permission to access the location
+    try {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print('${position.latitude}, ${position.longitude}');
+
+      String gpsUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=AIzaSyA2UNVzsvPGUMmhXUb56oMyDCC4e40TqXk&language=ko';
+      final responseGps = await http.get(Uri.parse(gpsUrl));
+      // String jsonData = convert.jsonDecode(responseGps.body);
+      String jsonData = responseGps.body;
+      print(jsonData);
+
+      Map<String, dynamic> jsonDataMap = convert.jsonDecode(jsonData);
+
+      // "results" 배열에서 첫 번째 요소 가져오기
+      Map<String, dynamic> firstResult = jsonDataMap['results'][0];
+
+      // "address_components" 배열 가져오기
+      List<dynamic> addressComponents = firstResult['address_components'];
+
+      // administrative_area_level_1과 sublocality_level_1의 short_name 가져오기
+      String administrativeArea='default';
+      String sublocality='default';
+
+      for (dynamic component in addressComponents) {
+        Map<String, dynamic> componentMap = Map<String, dynamic>.from(component);
+        List<String> types = List<String>.from(componentMap['types']);
+
+        if (types.contains("administrative_area_level_1")) {
+          administrativeArea = component['short_name'];
+        }
+
+        if (types.contains("sublocality_level_1")) {
+          sublocality = component['short_name'];
+        }
+      }
+
+      // 결과 출력
+      String addressResultText = administrativeArea + " " + sublocality;
+      print(addressResultText);
+
+      setState(() {
+        addressResult = addressResultText;
+      });
+
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
 }
 
 class MyLinePainter extends CustomPainter{
