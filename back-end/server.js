@@ -48,6 +48,25 @@ app.get('/get', function(req, res){
     })
   })
 
+app.get('/getRow/user_email', function(req, res){
+	var user_email = req.query.encodedEmail;
+	console.log(user_email);
+    var sql = 'select user_nickname from user where user_email = ?';
+    con.query(sql, [user_email], function(err, result, fields){
+      if(err){
+	console.log(err);
+      }
+	    else{
+		    console.log(result);
+		if(result.length>0){
+			res.json(result[0]);
+		}else{
+			res.json(null);
+		}
+	    }
+    })
+  })
+
 app.post("/sendUserInfo", function(req,res){
         const body = req.body;
         var sql = 'INSERT INTO user (user_email, user_name) VALUES (?, ?)';
