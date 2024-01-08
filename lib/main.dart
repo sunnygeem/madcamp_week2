@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: _buildThemeData(),
-      home: Tab2DetailScreen(),
+      home: SignupPage(),
     );
   }
 
