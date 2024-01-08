@@ -29,7 +29,7 @@ class _SignupPageState extends State<SignupPage> {
               color: Colors.brown,
           ),
           label: Text(
-              'Sign Up With Google',
+              '구글 회원가입/로그인',
               style: TextStyle(
                 color: Colors.black,
               ),
