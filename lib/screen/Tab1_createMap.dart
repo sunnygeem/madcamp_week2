@@ -204,7 +204,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           Positioned(
-            top: 10, // 적절한 위치로 조정
+            top: 50, // 적절한 위치로 조정
             left: 0,
             right: 0,
             child: Container(
@@ -213,7 +213,7 @@ class _MapScreenState extends State<MapScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 style: const TextStyle(
-                  fontSize: 13,
+                  fontSize: 24,
                   color: Colors.black,
                 ),
                 decoration: const InputDecoration(

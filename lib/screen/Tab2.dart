@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:madcamp_week2/screen/Tab2_detail.dart';
 
 class Tab2 extends StatefulWidget {
   const Tab2({Key? key}) : super(key: key);
@@ -166,6 +167,18 @@ class _Tab2 extends State<Tab2>{
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Tab2DetailScreen(trailData: [
+                                          trailnameList[index * 2],
+                                          trailnameList[index * 2 + 1],
+                                        ]),
+                                      ),
+                                    );
+                                  },
+
                                 ),
                               ),
                             );

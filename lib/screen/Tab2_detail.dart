@@ -6,6 +6,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Tab2DetailScreen extends StatefulWidget{
+  final List<String> trailData;
+  Tab2DetailScreen({required this.trailData});
+
   @override
   State<Tab2DetailScreen> createState() => _Tab2DetailScreenState();
 }
@@ -13,13 +16,7 @@ class Tab2DetailScreen extends StatefulWidget{
 class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
   late GoogleSignInAccount?  user;
 
-  late StreamSubscription<Position> _positionStreamSubcription;
-
   late LatLng _currentPosition = LatLng(0.0,0.0);
-
-  late BitmapDescriptor _markerIcon;
-
-  late BitmapDescriptor _pointIcon;
 
   PolylinePoints polylinePoints = PolylinePoints();
 
@@ -53,7 +50,8 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
-              body: SingleChildScrollView(
+              body:
+              SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
