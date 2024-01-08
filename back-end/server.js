@@ -26,10 +26,13 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 
+// for test
 app.get('/', function(req, res){
 res.send('hi');
 })
 
+
+// table: user
 app.get('/get', function(req, res){
     var sql = 'select * from user';
     con.query(sql, function(err, id, fields){
@@ -92,4 +95,82 @@ app.patch('/update/user_nickname', (req, res) => {
   )
 })
 
+
+// table: position
+app.post("/sendPosition", function(req,res){
+        const body = req.body;
+        var sql = 'INSERT INTO _position (trail_name, location1, location2, location3, location4, location5) VALUES (?, ?, ?, ?, ?, ?)';
+        con.query(sql, [body.trail_name, body.location1, body.location2, body.location3, body.location4, body.location5], function(error, result, field){
+            if(error){
+            console.error(error);
+            }
+        })
+      })
+
+app.get('/getPosition', function(req, res){ // trail_name으로 pos 정보 가져오기
+        var trail_name = req.query.trailName;
+        console.log(trail_name);
+    var sql = 'select (location1, location2, location3, location4, location5) from _position where trail_name = ?';
+    con.query(sql, [trail_name], function(err, result, fields){
+      if(err){
+        console.log(err);
+      }
+            else{
+                    console.log(result);
+            }
+    })
+  })
+
+// table: trail
+app.post("/sendTrail", function(req,res){
+        const body = req.body;
+        var sql = 'INSERT INTO trail (trail_name, user_email, tag, shortInfo) VALUES (?, ?, ?, ?)';
+        con.query(sql, [body.trail_name, body.user_email, body.tag, body.shortInfo], function(error, result, field){
+            if(error){
+            console.error(error);
+            }
+        })
+      })
+
+app.get('/getTrail', function(req, res){ // trail_name으로 pos 정보 가져오기
+        var trail_name = req.query.trailName;
+        console.log(trail_name);
+    var sql = 'select (user_email, tag, shortInfo) from trail where trail_name = ?';
+    con.query(sql, [trail_name], function(err, result, fields){
+      if(err){
+        console.log(err);
+      }
+            else{
+                    console.log(result);
+            }
+    })
+  })
+
+// table: review
+app.post("/sendReview", function(req,res){
+        const body = req.body;
+        var sql = 'INSERT INTO review (trail_name, review, rev_nickname) VALUES (?, ?, ?)';
+        con.query(sql, [body.trail_name, body.review, body.rev_nickname], function(error, result, field){
+            if(error){
+            console.error(error);
+            }
+        })
+      })
+
+app.get('/getReview', function(req, res){ // trail_name으로 pos 정보 가져오기
+        var trail_name = req.query.trailName;
+        console.log(trail_name);
+    var sql = 'select (review, rev_nickname) from trail where trail_name = ?';
+    con.query(sql, [trail_name], function(err, result, fields){
+      if(err){
+        console.log(err);
+      }
+            else{
+                    console.log(result);
+            }
+    })
+  })
+
+
+// check port listening
 app.listen(PORT, function(){console.log('now on port 5000')})
