@@ -32,7 +32,7 @@ class _MapScreenState extends State<MapScreen>{
   late GoogleMapController googleMapController;
   final Completer<GoogleMapController> completer = Completer();
 
-  List<LatLng> result_LatLng = [];
+  List<String> total_location = [];
 
   addMarker(latLng, newSetState){
     markers.add(
@@ -56,37 +56,11 @@ class _MapScreenState extends State<MapScreen>{
     print('getDirections function run');
     List<LatLng> polylineCoordinates = [];
 
-    // List<PolylineWayPoint> polylineWayPoints = [];
-    // for(var i=0; i<markers.length; i++){
-    //   polylineWayPoints.add(PolylineWayPoint(location:
-    //   "${markers[i].position.latitude.toString()},${markers[i].position.longitude.toString()}",stopOver: true));
-    // }
-
     for (var i=0; i<markers.length; i++){
       polylineCoordinates.add(markers[i].position);
     }
 
     addPolyLine(polylineCoordinates, newSetState);
-
-    // try{
-    //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-    //       "AIzaSyA2UNVzsvPGUMmhXUb56oMyDCC4e40TqXk",
-    //       PointLatLng(markers.first.position.latitude, markers.first.position.longitude),
-    //       PointLatLng(markers.last.position.latitude, markers.last.position.longitude),
-    //       travelMode: TravelMode.,
-    //       wayPoints: polylineWayPoints
-    //   );
-    //   if(result.status == 'OK'){
-    //     polylineCoordinates = result.points.map((point) => LatLng(point.latitude, point.longitude)).toList();
-    //   } else{
-    //     print('No valid route found');
-    //   }
-    // } catch (e){
-    //   print('Error getting route: $e');
-    // }
-    //
-    // newSetState(() {});
-    // addPolyLine(polylineCoordinates, newSetState);
   }
 
   addPolyLine(List<LatLng> polylineCoordinates, newSetState) {
@@ -182,10 +156,15 @@ class _MapScreenState extends State<MapScreen>{
             onPressed: () {
               dispose();
 
-              for(var i=0; i<markers.length; i++){
-                result_LatLng.add(markers[i].position);
+              for(var i=0; i<5; i++){
+                if (i==0){
+                  total_location.add(markers[(i*(markers.length/4)).round()].position.toString());
+                } else{
+                  total_location.add(markers[(i*(markers.length/4)).round()-1].position.toString());
+                }
               }
-              print(result_LatLng.toString());
+
+              print(total_location);
 
               Navigator.pop(context);
             },

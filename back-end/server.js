@@ -6,7 +6,7 @@ var con = mysql.createConnection({
     host: '15.164.95.87',
     user: 'root',
     database: 'footprint',
-	password: '',
+	password: '1234abcd',
   });
 
 
