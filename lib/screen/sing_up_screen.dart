@@ -21,7 +21,7 @@ class _SignupPageState extends State<SignupPage> {
         child: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
-            minimumSize: Size(double.infinity, 50),
+            elevation: 10.0,
           ),
           onPressed: signIn,
           icon: FaIcon(

@@ -122,10 +122,9 @@ class _EditProfileState extends State<EditProfile> {
                   SizedBox(
                     width: 240,
                     child: Container(
-                      padding: EdgeInsets.only(left: 5),
+                      padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Color(0xFFEAC784),
-                        borderRadius: BorderRadius.circular(20.0),
+                        color: Color(0xFFECECEC),
                       ),
                       height: 30,
                       child: Center(
