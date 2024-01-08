@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:madcamp_week2/screen/Tab1.dart';
 import 'package:madcamp_week2/screen/Tab2.dart';
+import 'package:madcamp_week2/screen/Tab2_detail.dart';
 import 'package:madcamp_week2/screen/Tab3.dart';
 import 'package:madcamp_week2/screen/Tab4.dart';
 import 'package:madcamp_week2/screen/sing_up_screen.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: _buildThemeData(),
-      home: SignupPage(),
+      home: Tab2DetailScreen(),
     );
   }
 
