@@ -108,15 +108,16 @@ app.post("/sendPosition", function(req,res){
       })
 
 app.get('/getPosition', function(req, res){ // trail_name으로 pos 정보 가져오기
-        var trail_name = req.query.trailName;
-        console.log(trail_name);
-    var sql = 'select (location1, location2, location3, location4, location5) from _position where trail_name = ?';
+        var trail_name = req.query.encodedName;
+	console.log(trail_name);
+    var sql = 'SELECT CONCAT(location1, ", ", location2, ", ", location3, ", ", location4, ", ", location5) AS positions FROM _position WHERE trail_name = ?';
     con.query(sql, [trail_name], function(err, result, fields){
       if(err){
         console.log(err);
       }
             else{
                     console.log(result);
+		    res.json(result);
             }
     })
   })
@@ -142,6 +143,7 @@ app.get('/getTrail', function(req, res){ // trail_name으로 pos 정보 가져�
       }
             else{
                     console.log(result);
+		    res.json(result);
             }
     })
   })
@@ -185,6 +187,7 @@ app.get('/getReview', function(req, res){ // trail_name으로 pos 정보 가져�
       }
             else{
                     console.log(result);
+		    res.json(result);
             }
     })
   })
