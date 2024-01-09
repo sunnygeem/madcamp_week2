@@ -114,10 +114,17 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 20,),
+              Text(
+                '[ 등록된 리뷰 ]',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF0B421A),
+                ),
+              ),
               Center(
                 child: Column(
                   children: [
-                    const SizedBox(height: 100),
                     FutureBuilder<List<String>?>(
                       future: _getRevJsonData(widget.trailName),
                       builder: (context, snapshot) {
@@ -135,60 +142,44 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                               ),
                             ),
                             child: Container(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.all(20.0),
                               height: 650,
                               child: ListView.builder(
                                 itemCount: ((trailReviews.length)/2).round(),
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 110,
-                                    child: Container(
-                                      margin: EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20.0),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.2),
-                                            blurRadius: 3,
-                                            spreadRadius: 0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Material(
-                                        // elevation: 2,
-                                        color: Color(0xFFF6F3F0),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(30.0),
-                                        ),
-                                        child: ListTile(
-                                          title: Text(
-                                            trailReviews[index*2],
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 28,
-                                              color: Color(0xFF0B421A),
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          subtitle: Container(
-                                            margin: EdgeInsets.only(top: 8, left: 110, right: 110),
-                                            padding: EdgeInsets.all(2.0),
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFDAEADE),
-                                              borderRadius: BorderRadius.circular(20.0),
-                                            ),
-                                            child: Text(
-                                              trailReviews[index*2+1],
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w300,
-                                                fontSize: 15,
-                                                color: Colors.black,
+                                  return Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                              child: Column(
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        '작성자: '+trailReviews[index*2 + 1],
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 10,),
+                                                      Text(
+                                                        trailReviews[index*2],
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Divider(),
+                                                ],
                                               ),
-                                              textAlign: TextAlign.center,
+
                                             ),
-                                          ),
-                                        ),
-                                      ),
+                                        SizedBox(height: 10,),
+                                      ],
                                     ),
                                   );
                                 },
