@@ -87,6 +87,11 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xFF0B421A),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -123,9 +128,6 @@ class _EditProfileState extends State<EditProfile> {
                     width: 240,
                     child: Container(
                       padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFECECEC),
-                      ),
                       height: 30,
                       child: Center(
                         child: TextField(

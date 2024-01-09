@@ -107,10 +107,15 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _initPositionStream() {
-    const updateInterval = Duration(seconds: 5);
 
     _positionStreamSubcription =
-        Geolocator.getPositionStream().listen((Position position) {
+        Geolocator.getPositionStream(
+          locationSettings: AndroidSettings(
+            accuracy: LocationAccuracy.high,
+            // distanceFilter: 5,
+            intervalDuration: Duration(seconds: 30),
+          ),
+        ).listen((Position position) {
           setState(() {
             _currentPosition = LatLng(position.latitude, position.longitude);
             addMarker(_currentPosition, setState);
@@ -154,6 +159,7 @@ class _MapScreenState extends State<MapScreen> {
                 mapToolbarEnabled: false,
                 onMapCreated: onMapCreated,
                 polylines: Set<Polyline>.of(polylines.values),
+
               ),
             ),
           ),
@@ -204,7 +210,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           Positioned(
-            top: 10, // 적절한 위치로 조정
+            top: 50, // 적절한 위치로 조정
             left: 0,
             right: 0,
             child: Container(
@@ -213,7 +219,7 @@ class _MapScreenState extends State<MapScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 style: const TextStyle(
-                  fontSize: 13,
+                  fontSize: 24,
                   color: Colors.black,
                 ),
                 decoration: const InputDecoration(
@@ -260,7 +266,6 @@ class _MapScreenState extends State<MapScreen> {
       print("Error: $e");
     }
   }
-
 }
 
 

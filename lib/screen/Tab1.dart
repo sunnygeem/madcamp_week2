@@ -137,7 +137,7 @@ class _Tab1State extends State<Tab1>{
                         ),
                         child: IconButton(
                           icon: Image.asset('assets/tree.png'),
-                          onPressed: () {
+                          onPressed: () async{
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => MapScreen(user: widget.user,)),
