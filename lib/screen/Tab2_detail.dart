@@ -39,7 +39,7 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
   late BitmapDescriptor _pointIcon;
   late BitmapDescriptor _markerIcon;
 
-  List<LatLng> Latlnglist = [];
+  List<double> Latlnglist = [];
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +104,7 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                   fixedSize: Size(130, 10),
                 ),
                 onPressed: (){
-                  _getStringData(widget.trailName);
+                  Latlnglist = _getStringData(widget.trailName) as List<double>;
                   _showReviewDialog();
                 },
                 child: Text(
@@ -144,8 +144,46 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
   }
   //
 
-  Future<List<String>?> _getStringData(String trailName) async {
+  Future<List<double>?> _getStringData(String trailName) async {
+    try{
+      dynamic jsonData = await _getJsonData(trailName);
 
+      if (jsonData != null && jsonData is List){
+        List<String> latlngList = [];
+        List<double> doubleList = [];
+
+        for (var row in jsonData){
+          if (row is Map<String, dynamic>){
+            String stringData = jsonData.toString();
+            latlngList = splitAndCleanData(stringData);
+            print(latlngList);
+          }
+
+          for(int i=0; i<latlngList.length; i++){
+            doubleList.add(double.parse(latlngList[i]));
+          }
+
+          print(doubleList);
+        }
+        return doubleList;
+      } else {
+        return null;
+      }
+    } catch (e){
+      print('Error getting latlngList: $e');
+      return null;
+    }
+  }
+
+  List<String> splitAndCleanData(String data) {
+    List<String> items = data
+        .replaceAll('}]', '')
+        .replaceAll('[{positions: ', '')
+        .replaceAll('LatLng(', '')
+        .replaceAll(')', '')
+        .split(', ');
+
+    return items;
   }
 
   void _showReviewDialog() {
