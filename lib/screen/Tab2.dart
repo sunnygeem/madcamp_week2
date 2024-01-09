@@ -7,7 +7,6 @@ import 'package:madcamp_week2/screen/Tab2_detail.dart';
 
 class Tab2 extends StatefulWidget {
   const Tab2({Key? key}) : super(key: key);
-  // const Tab2({super.key, required this.trail});
 
   @override
   _Tab2 createState() => _Tab2();
@@ -122,7 +121,7 @@ class _Tab2 extends State<Tab2>{
         Center(
           child: Column(
             children: [
-              const SizedBox(height: 98),
+              const SizedBox(height: 100),
               FutureBuilder<List<String>?>(
                 future: fetchData(),
                 builder: (context, snapshot) {
@@ -132,53 +131,77 @@ class _Tab2 extends State<Tab2>{
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else {
                     List<String> trailnameList = snapshot.data ?? [];
-                    return Padding(
-                      padding: const EdgeInsets.all(16.0),
+                    return Theme(
+                      data: ThemeData(
+                        cardTheme: const CardTheme(
+                          color: Colors.transparent,
+                        ),
+                      ),
                       child: Container(
+                        padding: const EdgeInsets.all(16.0),
                         height: 650,
                         child: ListView.builder(
                           itemCount: ((trailnameList.length)/2).round(),
                           itemBuilder: (context, index) {
                             return Container(
-                              height: 120,
-                              child: Card(
-                                elevation: 3,
-                                margin: const EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 5),
-                                color: Color(0xFFF6F3F0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35.0),
+                              height: 110,
+                              child: Container(
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 3,
+                                      spreadRadius: 0,
+                                    ),
+                                  ],
                                 ),
-                                child: ListTile(
-                                  title: Text(
-                                    trailnameList[index*2],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 32,
-                                      color: Color(0xFF0B421A),
-                                    ),
-                                    textAlign: TextAlign.center,
+                                child: Material(
+                                  // elevation: 2,
+                                  color: Color(0xFFF6F3F0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
                                   ),
-                                  subtitle: Text(
-                                    trailnameList[index*2+1],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Tab2DetailScreen(trailData: [
-                                          trailnameList[index * 2],
-                                          trailnameList[index * 2 + 1],
-                                        ]),
+                                  child: ListTile(
+                                    title: Text(
+                                      trailnameList[index*2],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 28,
+                                        color: Color(0xFF0B421A),
                                       ),
-                                    );
-                                  },
-
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    subtitle: Container(
+                                      margin: EdgeInsets.only(top: 8, left: 100, right: 100),
+                                      padding: EdgeInsets.all(2.0),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFDAEADE),
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      child: Text(
+                                        trailnameList[index*2+1],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Tab2DetailScreen(trailData: [
+                                            trailnameList[index * 2],
+                                            trailnameList[index * 2 + 1],
+                                          ]),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             );
@@ -196,7 +219,6 @@ class _Tab2 extends State<Tab2>{
     );
   }
 }
-
 
 class MyLinePainter extends CustomPainter{
   @override
