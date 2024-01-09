@@ -332,20 +332,6 @@ class _Tab4State extends State<Tab4> {
   }
 
   Future<String?> getStringData(String email) async {
-    // try {
-    //   // getJsonData 함수 호출
-    //   dynamic jsonData = await getJsonData(email);
-    //
-    //   // jsondata를 String으로 변환
-    //   String jsonString = json.encode(jsonData);
-    //
-    //   return jsonString;
-    // } catch (e) {
-    //   print('Error getting string data: $e');
-    //   // 예외가 발생하면 null 또는 다른 기본값을 반환하거나 에러 처리를 수행할 수 있습니다.
-    //   return null;
-    // }
-
     try {
       // getJsonData 함수 호출
       dynamic jsonData = await getJsonData(email);
