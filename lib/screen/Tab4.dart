@@ -122,20 +122,12 @@ class _Tab4State extends State<Tab4> {
                         ),
                       ),
                       SizedBox(
-                        width: 240,
+                        width: 250,
                         child: Container(
                           margin: EdgeInsets.only(left: 24),
                           decoration: BoxDecoration(
-                            color: Color(0xFFF6F3F0),
+                            color: Color(0xFFDAEADE),
                             borderRadius: BorderRadius.circular(20.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
                           ),
                           height: 40,
                           child: Center(
@@ -185,20 +177,12 @@ class _Tab4State extends State<Tab4> {
                         ),
                       ),
                       SizedBox(
-                        width: 240,
+                        width: 250,
                         child: Container(
                           margin: EdgeInsets.only(left: 24),
                           decoration: BoxDecoration(
-                            color: Color(0xFFF6F3F0),
+                            color: Color(0xFFDAEADE),
                             borderRadius: BorderRadius.circular(20.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
                           ),
                           height: 40,
                           child: Center(
@@ -233,20 +217,12 @@ class _Tab4State extends State<Tab4> {
                         ),
                       ),
                       SizedBox(
-                        width: 240,
+                        width: 250,
                         child: Container(
                           margin: EdgeInsets.only(left: 24),
                           decoration: BoxDecoration(
-                            color: Color(0xFFF6F3F0),
+                            color: Color(0xFFDAEADE),
                             borderRadius: BorderRadius.circular(20.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
                           ),
                           height: 40,
                           child: Center(
