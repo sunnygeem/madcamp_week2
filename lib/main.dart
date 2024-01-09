@@ -6,6 +6,10 @@ import 'package:madcamp_week2/screen/Tab2.dart';
 import 'package:madcamp_week2/screen/Tab4.dart';
 import 'package:madcamp_week2/screen/sing_up_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+
+import 'SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +24,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: _buildThemeData(),
-      home: SignupPage(),
+      // home: SignupPage(),
+      home: SplashScreen(),
     );
   }
 
@@ -131,4 +136,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

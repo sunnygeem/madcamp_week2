@@ -6,7 +6,7 @@
     <application
         android:label="madcamp_week2"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_circle"
         android:enableOnBackInvokedCallback="true"
         >
 
