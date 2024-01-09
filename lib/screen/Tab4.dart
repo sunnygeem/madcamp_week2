@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:io' as io;
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -353,9 +353,9 @@ class _Tab4State extends State<Tab4> {
     }
   }
 
-  Future<File?> getImgFileData(String email) async {
-
-  }
+  // Future<File?> getImgFileData(String email) async {
+  //
+  // }
 
 }
 
