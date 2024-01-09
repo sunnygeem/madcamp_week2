@@ -24,12 +24,13 @@ class _SignupPageState extends State<SignupPage> {
             elevation: 10.0,
           ),
           onPressed: signIn,
-          icon: FaIcon(
-              FontAwesomeIcons.google,
-              color: Colors.brown,
+          icon: Image.asset(
+            'assets/google.png',
+            width: 28,
+            height: 28,
           ),
           label: Text(
-              '구글 회원가입/로그인',
+              '  구글 회원가입/로그인 ',
               style: TextStyle(
                 color: Colors.black,
               ),
