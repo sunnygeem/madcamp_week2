@@ -73,127 +73,129 @@ class _Tab2 extends State<Tab2>{
   @override
   Widget build(BuildContext context) {
 
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 690,
-          child: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(35),
-                topRight: Radius.circular(35),
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 690,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35),
+                  topRight: Radius.circular(35),
+                ),
+                color: Color(0xFFF6F3F0),
               ),
-              color: Color(0xFFF6F3F0),
             ),
           ),
-        ),
-        const Positioned(
-          bottom: 690,
-          left: 28.0,
-          child: Text(
-            '산책로 리스트',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFF6F3F0),
+          const Positioned(
+            bottom: 690,
+            left: 28.0,
+            child: Text(
+              '산책로 리스트',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFF6F3F0),
+              ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: 690,
-          left: 200.0,
-          child: CustomPaint(
-            painter: MyLinePainter(),
-            size: const Size(180, 10),
+          Positioned(
+            bottom: 690,
+            left: 200.0,
+            child: CustomPaint(
+              painter: MyLinePainter(),
+              size: const Size(180, 10),
+            ),
           ),
-        ),
-        Positioned(
-          bottom: 703,
-          left: 340.0,
-          child: Image.asset(
-            'assets/tree.png',
-            width: 38,
-            height: 38,
+          Positioned(
+            bottom: 703,
+            left: 340.0,
+            child: Image.asset(
+              'assets/tree.png',
+              width: 38,
+              height: 38,
+            ),
           ),
-        ),
-        Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 98),
-              FutureBuilder<List<String>?>(
-                future: fetchData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting){
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError){
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else {
-                    List<String> trailnameList = snapshot.data ?? [];
-                    return Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        height: 650,
-                        child: ListView.builder(
-                          itemCount: ((trailnameList.length)/2).round(),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 120,
-                              child: Card(
-                                elevation: 3,
-                                margin: const EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 5),
-                                color: Color(0xFFF6F3F0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35.0),
-                                ),
-                                child: ListTile(
-                                  title: Text(
-                                    trailnameList[index*2],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 32,
-                                      color: Color(0xFF0B421A),
-                                    ),
-                                    textAlign: TextAlign.center,
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 98),
+                FutureBuilder<List<String>?>(
+                  future: fetchData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting){
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError){
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      List<String> trailnameList = snapshot.data ?? [];
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          height: 650,
+                          child: ListView.builder(
+                            itemCount: ((trailnameList.length)/2).round(),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                height: 120,
+                                child: Card(
+                                  elevation: 3,
+                                  margin: const EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 5),
+                                  color: Color(0xFFF6F3F0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(35.0),
                                   ),
-                                  subtitle: Text(
-                                    trailnameList[index*2+1],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Tab2DetailScreen(trailData: [
-                                          trailnameList[index * 2],
-                                          trailnameList[index * 2 + 1],
-                                        ]),
+                                  child: ListTile(
+                                    title: Text(
+                                      trailnameList[index*2],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 32,
+                                        color: Color(0xFF0B421A),
                                       ),
-                                    );
-                                  },
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    subtitle: Text(
+                                      trailnameList[index*2+1],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Tab2DetailScreen(trailName:
+                                            trailnameList[index * 2], trailNickname:
+                                            trailnameList[index * 2 + 1],),
+                                        ),
+                                      );
+                                    },
 
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ],
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
+
   }
 }
 

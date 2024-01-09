@@ -6,8 +6,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Tab2DetailScreen extends StatefulWidget{
-  final List<String> trailData;
-  Tab2DetailScreen({required this.trailData});
+  final String trailName;
+  final String trailNickname;
+
+  Tab2DetailScreen({required this.trailName, required this.trailNickname});
 
   @override
   State<Tab2DetailScreen> createState() => _Tab2DetailScreenState();
@@ -28,8 +30,12 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
 
   List<String> total_location = [];
 
+
+
   @override
   Widget build(BuildContext context) {
+    print(widget.trailName);
+    print(widget.trailNickname);
     return Scaffold(
       body: Stack(
         children: [
