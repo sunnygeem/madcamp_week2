@@ -191,13 +191,11 @@ class _Tab2 extends State<Tab2>{
                                         ),
                                       ),
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Tab2DetailScreen(
-                                              trailName: trailnameList[index * 2],
-                                              trailNickname: trailnameList[index * 2 + 1],
-                                            ),
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) => Tab2DetailScreen(
+                                            trailName: trailnameList[index * 2],
+                                            trailNickname: trailnameList[index * 2 + 1],
                                           ),
                                         );
                                       },

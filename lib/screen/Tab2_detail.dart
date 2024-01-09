@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter/material.dart';
@@ -20,26 +22,89 @@ class Tab2DetailScreen extends StatefulWidget{
 class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
   late GoogleSignInAccount?  user;
 
-  late LatLng _currentPosition = LatLng(0.0,0.0);
-
+  String _review = '';
+  List<double> Latlnglist = [];
+  late CameraPosition _initialCameraPosition;
+  List<Marker> markers = [];
+  BitmapDescriptor? customMarkerIcon;
   PolylinePoints polylinePoints = PolylinePoints();
-
   Map<PolylineId, Polyline> polylines = {};
 
-  late GoogleMapController googleMapController;
+  @override
+  void initState() {
+    super.initState();
+    _setInitialCameraPosition();
+    _setCustomMarkerIcon();
+    _setMarkers();
+  }
 
-  final Completer<GoogleMapController> completer = Completer();
+  Future<void> _setCustomMarkerIcon() async{
+    customMarkerIcon = await _createCustomMarkerIcon();
+  }
 
-  List<String> total_location = [];
+  Future<BitmapDescriptor> _createCustomMarkerIcon() async{
+    final ByteData byteData = await rootBundle.load('assets/pin_point.png');
+    final Uint8List byteList = byteData.buffer.asUint8List();
+    return BitmapDescriptor.fromBytes(byteList);
+  }
 
-  String _review = '';
+  void _setInitialCameraPosition() async{
+    List<double>? positions = await _getStringData(widget.trailName);
 
-  List<Marker> markers = [];
+    if (positions != null && positions.length >= 2){
+      double latitude = positions[0];
+      double longitude = positions[1];
 
-  late BitmapDescriptor _pointIcon;
-  late BitmapDescriptor _markerIcon;
+      _initialCameraPosition = CameraPosition(
+        target: LatLng(latitude, longitude),
+        zoom: 18.5,
+      );
 
-  List<double> Latlnglist = [];
+      setState(() {}); //Trigger a rebuild to update Google Map
+    }
+  }
+
+  void _setMarkers() async{
+    List<double>? positions = await _getStringData(widget.trailName);
+
+    if (positions != null && positions.length >= 4){
+      for (int i=0; i<positions.length; i += 2){
+        double latitude = positions[i];
+        double longitude = positions[i+1];
+
+        Marker marker = Marker(
+          markerId: MarkerId('$latitude-$longitude'),
+          position: LatLng(latitude, longitude),
+          icon: customMarkerIcon ?? BitmapDescriptor.defaultMarker,
+        );
+
+        markers.add(marker);
+        getDirections(markers, setState);
+      }
+
+      setState(() {});
+    }
+  }
+
+  getDirections(List<Marker> markers, newSetState) async{
+    List<LatLng> polylineCoordinates = [];
+    for(var i=0; i<markers.length; i++){
+      polylineCoordinates.add(markers[i].position);
+    }
+    addPolyLine(polylineCoordinates, newSetState);
+  }
+
+  addPolyLine(List<LatLng> polylineCoordinates, newSetState){
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Color(0xFF0B421A),
+      points: polylineCoordinates,
+      width: 8,
+    );
+    polylines[id] = polyline;
+    newSetState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +112,7 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     print(widget.trailNickname);
 
     return AlertDialog(
-        contentPadding: EdgeInsets.all(5.0),
-      title: Text(''),
+      contentPadding: EdgeInsets.all(5.0),
       content: Scaffold(
         backgroundColor: Colors.transparent,
         body:
@@ -68,16 +132,12 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: _currentPosition,
+                    initialCameraPosition: _initialCameraPosition ?? CameraPosition(
+                      target: LatLng(36.0, 127.0),
                       zoom: 18.5,
                     ),
-                    onMapCreated: (controller) {
-                      setState(() {
-                        googleMapController = controller;
-                      });
-                    },
-                    mapToolbarEnabled: false,
+                    markers: markers.toSet(),
+                    polylines: Set<Polyline>.of(polylines.values),
                   ),
                 ),
               ),
@@ -104,7 +164,6 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                   fixedSize: Size(130, 10),
                 ),
                 onPressed: (){
-                  Latlnglist = _getStringData(widget.trailName) as List<double>;
                   _showReviewDialog();
                 },
                 child: Text(
@@ -142,7 +201,6 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
       return null;
     }
   }
-  //
 
   Future<List<double>?> _getStringData(String trailName) async {
     try{
@@ -156,15 +214,15 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
           if (row is Map<String, dynamic>){
             String stringData = jsonData.toString();
             latlngList = splitAndCleanData(stringData);
-            print(latlngList);
           }
 
           for(int i=0; i<latlngList.length; i++){
             doubleList.add(double.parse(latlngList[i]));
           }
-
-          print(doubleList);
         }
+
+        print(doubleList);
+
         return doubleList;
       } else {
         return null;
@@ -182,7 +240,6 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
         .replaceAll('LatLng(', '')
         .replaceAll(')', '')
         .split(', ');
-
     return items;
   }
 

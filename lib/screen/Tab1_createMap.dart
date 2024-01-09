@@ -159,7 +159,6 @@ class _MapScreenState extends State<MapScreen> {
                 mapToolbarEnabled: false,
                 onMapCreated: onMapCreated,
                 polylines: Set<Polyline>.of(polylines.values),
-
               ),
             ),
           ),
