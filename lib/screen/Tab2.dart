@@ -71,8 +71,7 @@ class _Tab2 extends State<Tab2>{
 
   @override
   Widget build(BuildContext context) {
-
-    return SingleChildScrollView(
+    return SafeArea(
       child: Stack(
         children: <Widget>[
           Positioned(
@@ -119,90 +118,90 @@ class _Tab2 extends State<Tab2>{
               height: 38,
             ),
           ),
-        ),
-        Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 100),
-              FutureBuilder<List<String>?>(
-                future: fetchData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting){
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError){
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else {
-                    List<String> trailnameList = snapshot.data ?? [];
-                    return Theme(
-                      data: ThemeData(
-                        cardTheme: const CardTheme(
-                          color: Colors.transparent,
+          Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 100),
+                FutureBuilder<List<String>?>(
+                  future: fetchData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting){
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError){
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      List<String> trailnameList = snapshot.data ?? [];
+                      return Theme(
+                        data: ThemeData(
+                          cardTheme: const CardTheme(
+                            color: Colors.transparent,
+                          ),
                         ),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(16.0),
-                        height: 650,
-                        child: ListView.builder(
-                          itemCount: ((trailnameList.length)/2).round(),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 110,
-                              child: Container(
-                                margin: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 3,
-                                      spreadRadius: 0,
-                                    ),
-                                  ],
-                                ),
-                                child: Material(
-                                  // elevation: 2,
-                                  color: Color(0xFFF6F3F0),
-                                  shape: RoundedRectangleBorder(
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          height: 650,
+                          child: ListView.builder(
+                            itemCount: ((trailnameList.length)/2).round(),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                height: 110,
+                                child: Container(
+                                  margin: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        blurRadius: 3,
+                                        spreadRadius: 0,
+                                      ),
+                                    ],
                                   ),
-                                  child: ListTile(
-                                    title: Text(
-                                      trailnameList[index*2],
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 28,
-                                        color: Color(0xFF0B421A),
-                                      ),
-                                      textAlign: TextAlign.center,
+                                  child: Material(
+                                    // elevation: 2,
+                                    color: Color(0xFFF6F3F0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
                                     ),
-                                    subtitle: Container(
-                                      margin: EdgeInsets.only(top: 8, left: 100, right: 100),
-                                      padding: EdgeInsets.all(2.0),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFDAEADE),
-                                        borderRadius: BorderRadius.circular(20.0),
-                                      ),
-                                      child: Text(
-                                        trailnameList[index*2+1],
+                                    child: ListTile(
+                                      title: Text(
+                                        trailnameList[index*2],
                                         style: const TextStyle(
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: 18,
-                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 28,
+                                          color: Color(0xFF0B421A),
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                    ),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Tab2DetailScreen(trailData: [
-                                            trailnameList[index * 2],
-                                            trailnameList[index * 2 + 1],
-                                          ]),
+                                      subtitle: Container(
+                                        margin: EdgeInsets.only(top: 8, left: 110, right: 110),
+                                        padding: EdgeInsets.all(2.0),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFDAEADE),
+                                          borderRadius: BorderRadius.circular(20.0),
                                         ),
-                                      );
-                                    },
+                                        child: Text(
+                                          trailnameList[index*2+1],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Tab2DetailScreen(
+                                              trailName: trailnameList[index * 2],
+                                              trailNickname: trailnameList[index * 2 + 1],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               );
@@ -219,7 +218,6 @@ class _Tab2 extends State<Tab2>{
         ],
       ),
     );
-
   }
 }
 

@@ -39,59 +39,59 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 600,
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35),
-                  topRight: Radius.circular(35),
-                ),
-                color: Color(0xFFF6F3F0),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 600,
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
+              ),
+              color: Color(0xFFF6F3F0),
+            ),
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+            body:
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 400,),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    height: 200,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50),
+                        topRight: Radius.circular(50),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: _currentPosition,
+                          zoom: 18.5,
+                        ),
+                        onMapCreated: (controller) {
+                          setState(() {
+                            googleMapController = controller;
+                          });
+                        },
+                        mapToolbarEnabled: false,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          Scaffold(
-            backgroundColor: Colors.transparent,
-              body:
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 400,),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      width: double.infinity,
-                      height: 200,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
-                        ),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                            target: _currentPosition,
-                            zoom: 18.5,
-                          ),
-                          onMapCreated: (controller) {
-                            setState(() {
-                              googleMapController = controller;
-                            });
-                          },
-                          mapToolbarEnabled: false,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
         ],
       ),
     );
