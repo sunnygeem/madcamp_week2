@@ -14,6 +14,9 @@ class EditProfile extends StatefulWidget{
 }
 
 class _EditProfileState extends State<EditProfile> {
+
+  String input_nickname = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +66,6 @@ class _EditProfileState extends State<EditProfile> {
               height: 38,
             ),
           ),
-
           Positioned(
             child: Stack(
                 alignment: Alignment.center,
@@ -108,49 +110,73 @@ class _EditProfileState extends State<EditProfile> {
           ),
           Positioned(
             top: 450,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    child: Container(
-                      margin: EdgeInsets.only(left: 30),
-                      child: const Text(
-                        '닉네임',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF0B421A),
-                        ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 120,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 30),
+                    child: const Text(
+                      '닉네임',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF0B421A),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 240,
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      height: 30,
-                      child: Center(
-                        child: TextField(
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                            decoration: const InputDecoration(
-                              isDense: true,
-                              hintText: '새로운 닉네임을 입력하세요.',
-                            ),
-                            textAlign: TextAlign.center,
-                            onSubmitted: (str) {
-                              updateJsonData('${widget.user?.email}', str);
-                              Navigator.of(context).pop();
-                            }
+                ),
+                SizedBox(
+                  width: 240,
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    height: 30,
+                    child: Center(
+                      child: TextField(
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
                         ),
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          hintText: '새로운 닉네임을 입력하세요.',
+                        ),
+                        textAlign: TextAlign.center,
+                        onChanged: (str) {
+                          setState(() {
+                            input_nickname = str;
+                          });
+                        }
                       ),
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 250,
+            left: MediaQuery
+                .of(context)
+                .size
+                .width / 2 - 50,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF0B421A),
+                elevation: 5.0,
               ),
-
+              onPressed: (){
+                updateJsonData('${widget.user?.email}', input_nickname);
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                '저장하기',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
           ),
         ],
       ),
