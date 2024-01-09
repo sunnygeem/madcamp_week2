@@ -29,6 +29,16 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
   BitmapDescriptor? customMarkerIcon;
   PolylinePoints polylinePoints = PolylinePoints();
   Map<PolylineId, Polyline> polylines = {};
+  late GoogleMapController googleMapController;
+  final Completer<GoogleMapController> completer = Completer();
+  String input_review = '';
+
+  void onMapCreated(GoogleMapController controller) {
+    googleMapController = controller;
+    if (!completer.isCompleted) {
+      completer.complete(controller);
+    }
+  }
 
   @override
   void initState() {
@@ -139,6 +149,8 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                     ),
                     markers: markers.toSet(),
                     polylines: Set<Polyline>.of(polylines.values),
+                    onMapCreated: onMapCreated,
+                    mapToolbarEnabled: false,
                   ),
                 ),
               ),
@@ -414,24 +426,30 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                     hintText: '리뷰를 입력하세요.\n(15자 이내)',
                   ),
                   textAlign: TextAlign.center,
-                  onSubmitted: (str) {
-                    if(str.length > 15 || str == '' || str == null){
-                      _showErrMsg();
-                    }
-                    else{
-                      _review = str;
-                      print(_review);
-                    }
+                  onChanged: (str) {
+                    setState(() {
+                      if(str.length > 15 || str == '' || str == null){
+                        _showErrMsg();
+                      }
+                      else{
+                        input_review = str;
+                      }
+                    });
                   },
                 ),
               ],
             ),
             actions: <Widget>[
-              new TextButton(
+              TextButton(
                 child: new Text("등록"),
                 onPressed: () {
-                  insertDataToRev(widget.trailName, _review, widget.trailNickname);
-                  Navigator.pop(context);
+                  if(input_review.length <= 15 && input_review != '' && input_review != null){
+                    insertDataToRev(widget.trailName, input_review, widget.trailNickname);
+                    Navigator.pop(context);
+                  }
+                  else{
+                    _showErrMsg();
+                  }
                 },
               ),
             ],

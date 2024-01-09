@@ -39,6 +39,8 @@ class _MapScreenState extends State<MapScreen> {
 
   List<String> total_location = [];
 
+  String input_trailname = '';
+
   addMarker(latLng, newSetState) {
     markers.add(
         Marker(
@@ -170,6 +172,7 @@ class _MapScreenState extends State<MapScreen> {
                 .width / 2 - 100,
             child: ElevatedButton(
               onPressed: () {
+                _trailName = input_trailname;
                 dispose();
 
                 for (var i = 0; i < 5; i++) {
@@ -185,8 +188,6 @@ class _MapScreenState extends State<MapScreen> {
                     );
                   }
                 }
-
-                print(total_location);
 
                 // upload total_location to db
                 insertDataToPos();
@@ -226,9 +227,10 @@ class _MapScreenState extends State<MapScreen> {
                   hintText: '새로운 산책로의 이름을 입력하세요.',
                 ),
                 textAlign: TextAlign.center,
-                onSubmitted: (str) {
-                  _trailName = str;
-                  print(_trailName);
+                onChanged: (str) {
+                  setState(() {
+                    input_trailname = str;
+                  });
                 },
               ),
             ),
