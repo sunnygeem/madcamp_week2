@@ -111,8 +111,9 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     print(widget.trailName);
     print(widget.trailNickname);
 
+
     return AlertDialog(
-      contentPadding: EdgeInsets.all(5.0),
+        contentPadding: EdgeInsets.all(5.0),
       content: Scaffold(
         backgroundColor: Colors.transparent,
         body:
@@ -171,6 +172,93 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                   style: TextStyle(
                     fontSize: 13,
                   ),
+                ),
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 100),
+                    FutureBuilder<List<String>?>(
+                      future: _getRevJsonData(widget.trailName),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting){
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError){
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        } else {
+                          List<String> trailReviews = snapshot.data ?? [];
+                          print(trailReviews);
+                          return Theme(
+                            data: ThemeData(
+                              cardTheme: const CardTheme(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.all(16.0),
+                              height: 650,
+                              child: ListView.builder(
+                                itemCount: ((trailReviews.length)/2).round(),
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    height: 110,
+                                    child: Container(
+                                      margin: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(0.2),
+                                            blurRadius: 3,
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Material(
+                                        // elevation: 2,
+                                        color: Color(0xFFF6F3F0),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(30.0),
+                                        ),
+                                        child: ListTile(
+                                          title: Text(
+                                            trailReviews[index*2],
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 28,
+                                              color: Color(0xFF0B421A),
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          subtitle: Container(
+                                            margin: EdgeInsets.only(top: 8, left: 110, right: 110),
+                                            padding: EdgeInsets.all(2.0),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFDAEADE),
+                                              borderRadius: BorderRadius.circular(20.0),
+                                            ),
+                                            child: Text(
+                                              trailReviews[index*2+1],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w300,
+                                                fontSize: 15,
+                                                color: Colors.black,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -243,10 +331,62 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     return items;
   }
 
+  Future<List<String>?> _getRevJsonData(String trailName) async{
+    try {
+      // 이메일 주소를 인코딩하여 URI에 추가
+      String encodedName = Uri.encodeComponent(trailName);
+
+      List<String> reviews = [];
+
+      final response = await http.get(Uri.parse('http://15.164.95.87:5000/getReview?encodedName=$encodedName'));
+      // 응답을 JSON으로 디코딩하여 반환
+      var userJson = json.decode(response.body);
+
+      dynamic json_row_from_trailName = await userJson;
+
+      for(int i=0; i<json_row_from_trailName.length; i++){
+        String revFromName = '';
+        String nicFromName = '';
+
+        if(json_row_from_trailName[i] != null && json_row_from_trailName[i] is Map<String, dynamic>){
+          if(json_row_from_trailName[i].containsKey('review')){
+            String tmpRev = json_row_from_trailName[i]['review'];
+            revFromName = tmpRev;
+          }
+          if(json_row_from_trailName[i].containsKey('rev_nickname')){
+            String tmpNickname = json_row_from_trailName[i]['rev_nickname'];
+            nicFromName = tmpNickname;
+          }
+        }
+
+        reviews.add(revFromName);
+        reviews.add(nicFromName);
+      }
+
+
+      return reviews;
+    } catch (e) {
+      print('Error getting JSON data - getReview: $e');
+      return null;
+    }
+  }
+
+  insertDataToRev(String trailName, String review, String nickname) async {
+    dynamic data = {'trail_name': trailName, 'review': review, 'rev_nickname': nickname,};
+    String jsonString = jsonEncode(data);
+    try {
+      final response = await http.post(Uri.parse('http://15.164.95.87:5000/sendReview'),
+          headers: {"Content-Type": "application/json"}, body: jsonString);
+      print("Response status code: ${response.statusCode}");
+      print("Response body: ${response.body}");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
   void _showReviewDialog() {
     showDialog(
         context: context,
-        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -275,8 +415,13 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
                   ),
                   textAlign: TextAlign.center,
                   onSubmitted: (str) {
-                    _review = str;
-                    print(_review);
+                    if(str.length > 15 || str == '' || str == null){
+                      _showErrMsg();
+                    }
+                    else{
+                      _review = str;
+                      print(_review);
+                    }
                   },
                 ),
               ],
@@ -284,6 +429,33 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
             actions: <Widget>[
               new TextButton(
                 child: new Text("등록"),
+                onPressed: () {
+                  insertDataToRev(widget.trailName, _review, widget.trailNickname);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void _showErrMsg() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            content: Text('입력 글자 수가 15자를 초과했거나, 리뷰를 입력하지 않았습니다.',
+            style: TextStyle(
+              fontSize: 13,
+            ),
+            ),
+            actions: <Widget>[
+              new TextButton(
+                child: new Text("창 닫기"),
                 onPressed: () {
                   Navigator.pop(context);
                 },
