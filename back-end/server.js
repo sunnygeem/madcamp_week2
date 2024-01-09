@@ -70,6 +70,24 @@ app.get('/getRow/user_email', function(req, res){
     })
   })
 
+app.get('/getRow/user_img', function(req, res){
+        var user_email = req.query.encodedEmail;
+        console.log(user_email);
+    var sql = 'select user_img from user where user_email = ?';
+    con.query(sql, [user_email], function(err, result, fields){
+      if(err){
+        console.log(err);
+      }
+           else{
+                if(result.length>0){
+                        res.json(result[0]);
+                }else{
+                        res.json(null);
+                }
+            }
+    })
+  })
+
 app.post("/sendUserInfo", function(req,res){
         const body = req.body;
         var sql = 'INSERT INTO user (user_email, user_name) VALUES (?, ?)';
@@ -91,6 +109,20 @@ app.patch('/update/user_nickname', (req, res) => {
       		console.log('results: ', results);
       		res.send('update ok');
     	}
+    }
+  )
+})
+
+app.patch('/update/user_img', (req, res) => {
+        const imageBuffer = Buffer.from(req.body.user_img, 'base64');
+        con.query(
+    `UPDATE user SET user_img=? WHERE user_email=? `,
+    [imageBuffer, req.query.encodedEmail],
+    (err, results, field) => {
+      if (err) throw err;
+            else{
+                res.send('update ok');
+        }
     }
   )
 })
