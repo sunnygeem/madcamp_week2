@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:madcamp_week2/screen/Tab1.dart';
 import 'package:madcamp_week2/screen/Tab2.dart';
-import 'package:madcamp_week2/screen/Tab2_detail.dart';
 import 'package:madcamp_week2/screen/Tab3.dart';
 import 'package:madcamp_week2/screen/Tab4.dart';
 import 'package:madcamp_week2/screen/sing_up_screen.dart';
@@ -27,11 +26,10 @@ class MyApp extends StatelessWidget {
 
   ThemeData _buildThemeData() {
     final base = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF0B421A)),
       scaffoldBackgroundColor: Color(0xFF0B421A),
+      colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF0B421A)),
       useMaterial3: true,
     );
-
     return base.copyWith();
   }
 }
@@ -84,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            label: '산책 코스 등록',
+            label: '산책로 등록',
             icon: Container(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.add),
@@ -99,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           BottomNavigationBarItem(
-            label: '산책 코스 공유',
+            label: '산책로 공유',
             icon: Container(
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.list),
