@@ -6,7 +6,7 @@ var con = mysql.createConnection({
     host: '15.164.95.87',
     user: 'root',
     database: 'footprint',
-	password: ' ',
+	password: '',
   });
 
 
@@ -177,20 +177,19 @@ app.post("/sendReview", function(req,res){
         })
       })
 
-app.get('/getReview', function(req, res){ // trail_name으로 pos 정보 가져오기
-        var trail_name = req.query.trailName;
-        console.log(trail_name);
-    var sql = 'select (review, rev_nickname) from trail where trail_name = ?';
-    con.query(sql, [trail_name], function(err, result, fields){
-      if(err){
-        console.log(err);
-      }
-            else{
-                    console.log(result);
-		    res.json(result);
-            }
-    })
-  })
+app.get('/getReview', function(req, res) {
+  var trail_name = req.query.encodedName;
+  console.log(trail_name);
+  var sql = 'select review, rev_nickname from review where trail_name = ?';
+  con.query(sql, [trail_name], function(err, result, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+      res.json(result);
+    }
+  });
+});
 
 
 // check port listening
