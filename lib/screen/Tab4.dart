@@ -1,11 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'dart:io' as io;
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:madcamp_week2/screen/edit_profile_screen.dart';
@@ -301,7 +296,7 @@ class _Tab4State extends State<Tab4> {
     try {
       // 이메일 주소를 인코딩하여 URI에 추가
       String encodedEmail = Uri.encodeComponent(email);
-      final response = await http.get(Uri.parse('http://15.164.95.87:5000/getRow/user_email?encodedEmail=$encodedEmail'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:8000/getRow/user_email?encodedEmail=$encodedEmail'));
       // 응답을 JSON으로 디코딩하여 반환
       var userJson = json.decode(response.body);
       return userJson;
@@ -337,26 +332,6 @@ class _Tab4State extends State<Tab4> {
       return null;
     }
   }
-
-  Future<dynamic> getImgJsonData(String email) async{
-    try {
-      // 이메일 주소를 인코딩하여 URI에 추가
-      String encodedEmail = Uri.encodeComponent(email);
-      final response = await http.get(Uri.parse('http://15.164.95.87:5000/getRow/user_img?encodedEmail=$encodedEmail'));
-      // 응답을 JSON으로 디코딩하여 반환
-      var userJson = json.decode(response.body);
-      return userJson;
-    } catch (e) {
-      print('Error getting JSON data: $e');
-      // 예외가 발생하면 null 또는 다른 기본값을 반환하거나 에러 처리를 수행할 수 있습니다.
-      return null;
-    }
-  }
-
-  // Future<File?> getImgFileData(String email) async {
-  //
-  // }
-
 }
 
 

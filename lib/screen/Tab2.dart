@@ -16,7 +16,7 @@ class _Tab2 extends State<Tab2>{
 
   Future<dynamic> getJsonData() async{
     try{
-      final response = await http.get(Uri.parse('http://15.164.95.87:5000/getTrailTable'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:8000/getTrailTable'));
       var userJson = json.decode(response.body);
       return userJson;
     } catch(e) {
@@ -41,7 +41,7 @@ class _Tab2 extends State<Tab2>{
               String nickname_from_email = '';
 
               String encodedEmail = Uri.encodeComponent(email_from_trail);
-              final response = await http.get(Uri.parse('http://15.164.95.87:5000/getRow/user_email?encodedEmail=$encodedEmail'));
+              final response = await http.get(Uri.parse('http://10.0.2.2:8000/getRow/user_email?encodedEmail=$encodedEmail'));
               var row_from_email = json.decode(response.body);
 
               dynamic json_row_from_email = await row_from_email;

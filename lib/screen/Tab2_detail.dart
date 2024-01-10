@@ -291,7 +291,7 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     try {
       // 이메일 주소를 인코딩하여 URI에 추가
       String encodedName = Uri.encodeComponent(trailName);
-      final response = await http.get(Uri.parse('http://15.164.95.87:5000/getPosition?encodedName=$encodedName'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:8000/getPosition?encodedName=$encodedName'));
       // 응답을 JSON으로 디코딩하여 반환
       var userJson = json.decode(response.body);
       return userJson;
@@ -349,7 +349,7 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
 
       List<String> reviews = [];
 
-      final response = await http.get(Uri.parse('http://15.164.95.87:5000/getReview?encodedName=$encodedName'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:8000/getReview?encodedName=$encodedName'));
       // 응답을 JSON으로 디코딩하여 반환
       var userJson = json.decode(response.body);
 
@@ -386,7 +386,7 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     dynamic data = {'trail_name': trailName, 'review': review, 'rev_nickname': nickname,};
     String jsonString = jsonEncode(data);
     try {
-      final response = await http.post(Uri.parse('http://15.164.95.87:5000/sendReview'),
+      final response = await http.post(Uri.parse('http://10.0.2.2:8000/sendReview'),
           headers: {"Content-Type": "application/json"}, body: jsonString);
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");
