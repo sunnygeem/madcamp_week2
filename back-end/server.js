@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 var con = mysql.createConnection({
-    host: '15.164.95.87',
+    host: '13.124.111.253',
     user: 'root',
     database: 'footprint',
 	password: ' ',
