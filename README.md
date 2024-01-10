@@ -79,6 +79,10 @@ _**poisition:** 산책로 checkpoint
 
 ********************[overview]********************
 
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/18b2e560-03ee-4099-a9c6-c335ddfa29f8" width="30%" height="30%">
+
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/c9dad68b-d183-478c-9379-90af50946505" width="30%" height="30%">
+
 ****************[기능]****************
 
 - 데이터베이스에 등록된 산책로 리스트를 볼 수 있습니다.
