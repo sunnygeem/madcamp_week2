@@ -1,35 +1,36 @@
-import mysql from 'mysql2';
-import express from 'express';
-import bodyParser from 'body-parser';
+const express = require('express');
+const path = require('path');
+const mysql = require('mysql2');
+const bodyParser = require('body-parser');
+
+
 
 var con = mysql.createConnection({
-    host: '13.125.232.48',
+    host: '',
     user: 'root',
-    database: 'footprint',
-	password: ' ',
+    password: '',
+    port: ,
+    database: 'week2'
+
   });
 
 
+
 con.connect(function(err){
-  if (err){
-    console.log('error: ', err);
-  }
-	else{
+  if (err) throw err;
   console.log('Connected');
-	}
 })
 
-const app = express();
 
-app.use(bodyParser.json());
+ const app = express();
+ app.use(express.json());
+
+ app.use(bodyParser.json());
  app.use(bodyParser.urlencoded({extended:true}));
 
-const PORT = process.env.PORT || 5000;
-
-// for test
-app.get('/', function(req, res){
-res.send('hi');
-})
+ app.listen(8000, function () {
+   console.log('listening on 8000')
+ });
 
 
 // table: user
@@ -90,6 +91,7 @@ app.get('/getRow/user_img', function(req, res){
 
 app.post("/sendUserInfo", function(req,res){
         const body = req.body;
+        console.log(body);
         var sql = 'INSERT INTO user (user_email, user_name) VALUES (?, ?)';
         con.query(sql, [body.user_email, body.user_name], function(error, result, field){
             if(error){
@@ -210,9 +212,9 @@ app.post("/sendReview", function(req,res){
       })
 
 app.get('/getReview', function(req, res){ // trail_name으로 pos 정보 가져오기
-        var trail_name = req.query.trailName;
+        var trail_name = req.query.encodedName;
         console.log(trail_name);
-    var sql = 'select (review, rev_nickname) from trail where trail_name = ?';
+    var sql = 'select review, rev_nickname from review where trail_name = ?';
     con.query(sql, [trail_name], function(err, result, fields){
       if(err){
         console.log(err);
@@ -223,7 +225,3 @@ app.get('/getReview', function(req, res){ // trail_name으로 pos 정보 가져�
             }
     })
   })
-
-
-// check port listening
-app.listen(PORT, function(){console.log('now on port 5000')})
