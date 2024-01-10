@@ -1,6 +1,5 @@
 # 발자국
-
-![logo_circle.png](%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%80%E1%85%AE%E1%86%A8%2012a33537c545471486bc0207c3bb6d48/logo_circle.png)
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/55eef5df-08a7-48fc-970e-bc5d10a07314" width="10%" height="10%">
 
 발자국에서 나만의 산책로를 업데이트하고 다른 사람들이 등록한 산책로를 직접 걸어보세요!
 
@@ -62,9 +61,9 @@ _**poisition:** 산책로 checkpoint
 
 **[overview]**
 
-![Untitled](%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%80%E1%85%AE%E1%86%A8%2012a33537c545471486bc0207c3bb6d48/Untitled.png)
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/0fbea0ab-d576-4100-8337-58da5ab9c02f" width="30%" height="30%">
 
-![Untitled](%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8C%E1%85%A1%E1%84%80%E1%85%AE%E1%86%A8%2012a33537c545471486bc0207c3bb6d48/Untitled%201.png)
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/e1d31dcb-6afc-4b07-9d59-150abfdacb90" width="30%" height="30%">
 
 **[기능]**
 
