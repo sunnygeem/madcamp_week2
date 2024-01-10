@@ -61,9 +61,9 @@ _**poisition:** 산책로 checkpoint
 
 **[overview]**
 
-<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/0fbea0ab-d576-4100-8337-58da5ab9c02f" width="30%" height="30%">
-
 <img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/e1d31dcb-6afc-4b07-9d59-150abfdacb90" width="30%" height="30%">
+
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/0fbea0ab-d576-4100-8337-58da5ab9c02f" width="30%" height="30%">
 
 **[기능]**
 
