@@ -9,7 +9,7 @@
 
 **Front-end** `flutter`
 
-**Back-end/** `nodejs`(server), `mysql`(db)
+**Back-end/** `nodejs`, `aws`(server), `mysql`(db)
 
 ---
 
