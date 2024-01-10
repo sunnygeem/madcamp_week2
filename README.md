@@ -93,6 +93,10 @@ _**poisition:** 산책로 checkpoint
 
 **[overview]**
 
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/27bd9840-251b-4975-a27c-8c9ea272bdaf" width="30%" height="30%">
+
+<img src="https://github.com/sunnygeem/madcamp_week2/assets/51894747/2db082f1-fb6c-473e-a7f7-2dda3ef654c4" width="30%" height="30%">
+
 **[기능]**
 
 - 내 프로필을 확인할 수 있습니다.
