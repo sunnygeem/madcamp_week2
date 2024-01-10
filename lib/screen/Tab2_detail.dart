@@ -20,6 +20,7 @@ class Tab2DetailScreen extends StatefulWidget{
 }
 
 class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
+  bool isLoading = true;
   late GoogleSignInAccount?  user;
 
   String _review = '';
@@ -43,9 +44,17 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
   @override
   void initState() {
     super.initState();
-    _setInitialCameraPosition();
-    _setCustomMarkerIcon();
-    _setMarkers();
+    _loadData();
+  }
+
+  Future<void> _loadData() async{
+    await _setInitialCameraPosition();
+    await _setCustomMarkerIcon();
+    await _setMarkers();
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Future<void> _setCustomMarkerIcon() async{
@@ -58,23 +67,23 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
     return BitmapDescriptor.fromBytes(byteList);
   }
 
-  void _setInitialCameraPosition() async{
+  Future<void> _setInitialCameraPosition() async{
     List<double>? positions = await _getStringData(widget.trailName);
 
     if (positions != null && positions.length >= 2){
       double latitude = positions[0];
       double longitude = positions[1];
 
-      _initialCameraPosition = CameraPosition(
-        target: LatLng(latitude, longitude),
-        zoom: 18.5,
-      );
-
-      setState(() {}); //Trigger a rebuild to update Google Map
+      setState(() {
+        _initialCameraPosition = CameraPosition(
+          target: LatLng(latitude, longitude),
+          zoom: 18.5,
+        );
+      }); //Trigger a rebuild to update Google Map
     }
   }
 
-  void _setMarkers() async{
+  Future<void> _setMarkers() async{
     List<double>? positions = await _getStringData(widget.trailName);
 
     if (positions != null && positions.length >= 4){
@@ -124,150 +133,149 @@ class _Tab2DetailScreenState extends State<Tab2DetailScreen> {
 
     return AlertDialog(
         contentPadding: EdgeInsets.all(5.0),
-      content: Scaffold(
+      content: isLoading ? CircularProgressIndicator():
+      Scaffold(
         backgroundColor: Colors.transparent,
         body:
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                width: double.infinity,
-                height: 200,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
-                  ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: GoogleMap(
-                    initialCameraPosition: _initialCameraPosition ?? CameraPosition(
-                      target: LatLng(36.0, 127.0),
-                      zoom: 18.5,
+        Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  height: 200,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
                     ),
-                    markers: markers.toSet(),
-                    polylines: Set<Polyline>.of(polylines.values),
-                    onMapCreated: onMapCreated,
-                    mapToolbarEnabled: false,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: GoogleMap(
+                      initialCameraPosition: _initialCameraPosition ?? CameraPosition(
+                        target: LatLng(36.0, 127.0),
+                        zoom: 18.5,
+                      ),
+                      markers: markers.toSet(),
+                      polylines: Set<Polyline>.of(polylines.values),
+                      onMapCreated: onMapCreated,
+                      mapToolbarEnabled: false,
+                    ),
                   ),
                 ),
-              ),
-              Text('등록자: ${widget.trailNickname}',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-              SizedBox(height: 5,),
-              Text('${widget.trailName}',
-                style: TextStyle(
-                  color: Color(0xFF0B421A),
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10,),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF0B421A),
-                  elevation: 5.0,
-                  fixedSize: Size(130, 10),
-                ),
-                onPressed: (){
-                  _showReviewDialog();
-                },
-                child: Text(
-                  '리뷰 등록하기',
+                Text('등록자: ${widget.trailNickname}',
+                  textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 13,
                   ),
                 ),
-              ),
-              SizedBox(height: 20,),
-              Text(
-                '[ 등록된 리뷰 ]',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF0B421A),
+                SizedBox(height: 5,),
+                Text('${widget.trailName}',
+                  style: TextStyle(
+                    color: Color(0xFF0B421A),
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    FutureBuilder<List<String>?>(
-                      future: _getRevJsonData(widget.trailName),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting){
-                          return const Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError){
-                          return Center(child: Text('Error: ${snapshot.error}'));
-                        } else {
-                          List<String> trailReviews = snapshot.data ?? [];
-                          print(trailReviews);
-                          return Theme(
-                            data: ThemeData(
-                              cardTheme: const CardTheme(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.all(20.0),
-                              height: 650,
-                              child: ListView.builder(
-                                itemCount: ((trailReviews.length)/2).round(),
-                                itemBuilder: (context, index) {
-                                  return Center(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                              child: Column(
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      Text(
-                                                        '작성자: '+trailReviews[index*2 + 1],
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.grey,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 10,),
-                                                      Text(
-                                                        trailReviews[index*2],
-                                                        style: TextStyle(
-                                                          fontSize: 13,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Divider(),
-                                                ],
-                                              ),
-
-                                            ),
-                                        SizedBox(height: 10,),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        }
-                      },
+                SizedBox(height: 10,),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color(0xFF0B421A),
+                    elevation: 5.0,
+                    fixedSize: Size(130, 10),
+                  ),
+                  onPressed: (){
+                    _showReviewDialog();
+                  },
+                  child: Text(
+                    '리뷰 등록하기',
+                    style: TextStyle(
+                      fontSize: 13,
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+                SizedBox(height: 20,),
+                Text(
+                  '[ 등록된 리뷰 ]',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF0B421A),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      FutureBuilder<List<String>?>(
+                        future: _getRevJsonData(widget.trailName),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting){
+                            return const Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError){
+                            return Center(child: Text('Error: ${snapshot.error}'));
+                          } else {
+                            List<String> trailReviews = snapshot.data ?? [];
+                            print(trailReviews);
+                            return Theme(
+                              data: ThemeData(
+                                cardTheme: const CardTheme(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.all(20.0),
+                                height: 650,
+                                child: ListView.builder(
+                                  itemCount: ((trailReviews.length)/2).round(),
+                                  itemBuilder: (context, index) {
+                                    return Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                                child: Column(
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          '작성자: '+trailReviews[index*2 + 1],
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Colors.grey,
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 10,),
+                                                        Text(
+                                                          trailReviews[index*2],
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Divider(),
+                                                  ],
+                                                ),
+
+                                              ),
+                                          SizedBox(height: 10,),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
         ),
-      ),
       actions: [
         ElevatedButton(
           onPressed: (){
