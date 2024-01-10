@@ -245,7 +245,7 @@ class _MapScreenState extends State<MapScreen> {
     String jsonString = jsonEncode(data);
     print('!!!!!!!!!!'+jsonString+'!!!!!!!!!!!!');
     try {
-      final response = await http.post(Uri.parse('http://15.164.95.87:5000/sendPosition'),
+      final response = await http.post(Uri.parse('http://10.0.2.2:8000/sendPosition'),
           headers: {"Content-Type": "application/json"}, body: jsonString);
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");
@@ -259,7 +259,7 @@ class _MapScreenState extends State<MapScreen> {
     String jsonString = jsonEncode(data);
     print('??????????'+jsonString+'????????????');
     try {
-      final response = await http.post(Uri.parse('http://15.164.95.87:5000/sendTrail'),
+      final response = await http.post(Uri.parse('http://10.0.2.2:8000/sendTrail'),
           headers: {"Content-Type": "application/json"}, body: jsonString);
       print("Response status code: ${response.statusCode}");
       print("Response body: ${response.body}");

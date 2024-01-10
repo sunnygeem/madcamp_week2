@@ -20,7 +20,7 @@ class _EditProfileState extends State<EditProfile> {
 
   String input_nickname = '';
 
-  File? _selectedImage;
+  int _imageNum = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -95,13 +95,21 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ],
                         ),
+                        child: ClipOval(
+                          child: Image.asset(imagePaths[_imageNum],
+                            fit: BoxFit.fill,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+
+
                       ),
-                      _selectedImage != null ? ClipOval(child: Image.file(_selectedImage!, width: 130, height: 130, fit: BoxFit.cover,),) : const Text("이미지를 선택해 주세요."),
                     ],
                   ),
                   SizedBox(height: 20,),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 150),
+                    margin: EdgeInsets.symmetric(horizontal: 100),
                     child: ElevatedButton(
 
                       style: ElevatedButton.styleFrom(
@@ -110,13 +118,43 @@ class _EditProfileState extends State<EditProfile> {
                         elevation: 5.0,
                       ),
                       onPressed: (){
-                        getImage();
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text('이미지를 선택하세요.'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  children: List.generate(
+                                      imagePaths.length,
+                                          (index) => GestureDetector(
+                                        onTap: (){
+                                          _imageNum = index;
+                                          print('Selected Image: ${imagePaths[index]}');
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Image.asset(
+                                            imagePaths[index],
+                                            fit: BoxFit.fill,
+                                            height: 300,
+                                            width: 300,
+                                          ),
+                                        ),
+                                      )
+                                  ),
+                                ),
+                              ),
 
+                            );
+                          }
+                        );
                       },
                       child: Text(
                         '이미지 변경',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           color: Colors.black38,
                         ),
                       ),
@@ -183,7 +221,6 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       onPressed: (){
                         updateJsonData('${widget.user?.email}', input_nickname);
-                        uploadImageToDatabase(_selectedImage!, widget.user!.email);
                         Navigator.of(context).pop();
                       },
                       child: Text(
@@ -204,6 +241,16 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  List<String> imagePaths = [
+    'assets/1.jpeg',
+    'assets/2.jpeg',
+    'assets/3.jpeg',
+    'assets/4.jpeg',
+    'assets/5.jpeg',
+    'assets/6.jpeg',
+    'assets/7.jpeg',
+  ];
+
   updateJsonData(String email, String nickname) async{
     try {
       // 이메일 주소를 인코딩하여 URI에 추가
@@ -211,7 +258,7 @@ class _EditProfileState extends State<EditProfile> {
       Map<String, dynamic> data = {'user_nickname': nickname};
       String jsonString = jsonEncode(data);
 
-      final response = await http.patch(Uri.parse('http://15.164.95.87:5000/update/user_nickname?encodedEmail=$encodedEmail'), headers: {'Content-Type': 'application/json'}, body: jsonString);
+      final response = await http.patch(Uri.parse('http://10.0.2.2:8000/update/user_nickname?encodedEmail=$encodedEmail'), headers: {'Content-Type': 'application/json'}, body: jsonString);
 
       if (response.statusCode == 200) {
         print('Update successful');
@@ -224,44 +271,9 @@ class _EditProfileState extends State<EditProfile> {
       print('Error updating nickname: $e');
     }
   }
-  
-  Future getImage() async{
-    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _selectedImage = File(returnedImage!.path);
-    });
-  }
+  Future<void> uploadImageToDatabase(int imageNum, String email) async {
 
-  // image converting
-  String base64String(Uint8List data) {
-    return base64Encode(data);
-  }
-  Future<Uint8List> fileToUint8List(File file) async {
-    return await file.readAsBytes();
-  }
-  Future<void> uploadImageToDatabase(File imageFile, String email) async {
-    try {
-      // 이미지 파일을 Uint8List로 변환
-      Uint8List imageBytes = await fileToUint8List(imageFile);
-      // 이미지를 Base64로 인코딩
-      String base64Image = base64String(imageBytes);
-      String encodedEmail = Uri.encodeComponent(email);
-      Map<String, dynamic> data = {'user_img': base64Image};
-      String jsonString = jsonEncode(data);
-
-      final response = await http.patch(Uri.parse('http://15.164.95.87:5000/update/user_img?encodedEmail=$encodedEmail'), headers: {'Content-Type': 'application/json'}, body: jsonString);
-
-      if (response.statusCode == 200) {
-        print('Update successful');
-        print('Response body: ${response.body}');
-      } else {
-        print('Failed to update. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
-      }
-    } catch (e) {
-      print('Error updating Profile Image: $e');
-    }
   }
 }
 
