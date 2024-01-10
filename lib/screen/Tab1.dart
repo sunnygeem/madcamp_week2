@@ -125,18 +125,18 @@ class _Tab1State extends State<Tab1>{
                         height: 152,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(0xFF0B421A),
+                          color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black,
-                              spreadRadius: 3,
-                              blurRadius: 5,
+                              color: Colors.black54,
+                              spreadRadius: 0,
+                              blurRadius: 15,
                               offset: Offset(0,0),
                             ),
                           ],
                         ),
                         child: IconButton(
-                          icon: Image.asset('assets/tree.png'),
+                          icon: Image.asset('assets/logo_circle.png'),
                           onPressed: () async{
                             Navigator.push(
                               context,
